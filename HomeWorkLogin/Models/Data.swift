@@ -5,18 +5,6 @@
 //  Created by Артем Соколовский on 03.04.2021.
 //
 
-//struct Data {
-//    let title: String
-//    let textInfo: String
-//    let images: [Image]
-//    
-//    static func getData() -> [Data] {
-//        [
-//            Data(title: <#T##String#>, textInfo: <#T##String#>, images: <#T##[Image]#>)
-//        ]
-//    }
-//}
-
 struct Login {
     let userName: String
     let password: String
@@ -30,7 +18,7 @@ struct GeneralInfo {
     let name: String
     let surname: String
     let age: Int
-    let location: Location
+    let location: String
     let education: Education
     let hobbies: [String]
     let image: String
@@ -41,11 +29,7 @@ struct GeneralInfo {
             name: "Artem",
             surname: "Sokolovskiy",
             age: 22,
-            location:
-                Location(
-                    HomeTown: "Rostov-on-Don",
-                    CurrentTown: "Rostov-on-Don"
-                ),
+            location: "Rostov-On-Don",
             education: Education(
                 school: "School №60",
                 schoolGraduationYear: 2016,
@@ -83,9 +67,4 @@ struct University {
     let directionOfStudy: String
     let bachelorGraduationYear: Int
     let masterGraduationYear: Int
-}
-
-struct Location {
-    let HomeTown: String
-    let CurrentTown: String
 }
