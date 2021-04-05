@@ -14,6 +14,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    let username = Login.getLogin().userName
+    let password = Login.getLogin().password
+    
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,34 +35,54 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
     }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let greetingVC = segue.destination as? GreetingViewController else {
-            return
-        }
-        greetingVC.userName = userNameTextField.text
+        
+        let tabBarController = segue.destination as! UITabBarController
+
+        for viewController in tabBarController.viewControllers! {
+            
+         if let greetingVC = viewController as? GreetingViewController {
+            greetingVC.userName = GeneralInfo.getGeneralInfo().name
+            greetingVC.homeImage = GeneralInfo.getGeneralInfo().image
+            greetingVC.age = GeneralInfo.getGeneralInfo().age
+         }
+         
+         else if let navigationVC = viewController as? UINavigationController {
+            print(navigationVC.viewControllers)
+            let educationVC = navigationVC.topViewController as! EducationViewController
+                    educationVC.school = GeneralInfo.getGeneralInfo().education.school
+                    educationVC.university = GeneralInfo.getGeneralInfo().education.university.universityName
+                    educationVC.department = GeneralInfo.getGeneralInfo().education.university.departmentName
+                    educationVC.direction = GeneralInfo.getGeneralInfo().education.university.directionOfStudy
+                    print(GeneralInfo.getGeneralInfo().education.school)
+                }
+            }
     }
     
     // MARK: - IB Actions
     @IBAction func unwind(_ seg: UIStoryboardSegue) {
-        userNameTextField.text = ""
-        passwordTextField.text = ""
+        
+        userNameTextField.text = nil
+        passwordTextField.text = nil
     }
     
     @IBAction func forgotUserNameButton() {
-        showAlert(with: "User Name", and: "user")
+        showAlert(with: "User Name", and: username)
     }
     
     @IBAction func forgotPasswordButton() {
-        showAlert(with: "Password", and: "password")
+        showAlert(with: "Password", and: password)
     }
     
     @IBAction func logInButton() {
-        if userNameTextField.text != "user" || passwordTextField.text != "password" {
+        if userNameTextField.text != username || passwordTextField.text != password {
             showAlert(with: "Error!", and: "Wrong Log In")
+            passwordTextField.text = nil
         }
     }
     
@@ -69,7 +92,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             passwordTextField.becomeFirstResponder()
         }
         if textField == passwordTextField {
-            passwordTextField.resignFirstResponder()
             logInButton()
             performSegue(withIdentifier: "successLogin", sender: self)
         }
