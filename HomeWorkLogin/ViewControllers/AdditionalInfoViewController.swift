@@ -12,8 +12,8 @@ class AdditionalInfoViewController: UIViewController {
     
     @IBOutlet weak var skillsLabel: UILabel!
     @IBOutlet weak var hobbiesLabel: UILabel!
-    var skills: [String]!
-    var hobbies: [String]!
+    
+    var person: GeneralInfo!
     
     func parseArray(list: [String]!) -> String {
         var newString = ""
@@ -26,8 +26,8 @@ class AdditionalInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(skills!)
-        skillsLabel.text = parseArray(list: skills)
-        hobbiesLabel.text = parseArray(list: hobbies)
+
+        skillsLabel.text = parseArray(list: person.skills)
+        hobbiesLabel.text = parseArray(list: person.hobbies)
     }
 }

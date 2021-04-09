@@ -14,8 +14,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
-    let username = Login.getLogin().userName
-    let password = Login.getLogin().password
+    let login = Login.getLogin()
     
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
@@ -47,19 +46,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         for viewController in tabBarController.viewControllers! {
             
          if let greetingVC = viewController as? GreetingViewController {
-            greetingVC.userName = GeneralInfo.getGeneralInfo().name
-            greetingVC.homeImage = GeneralInfo.getGeneralInfo().image
-            greetingVC.age = GeneralInfo.getGeneralInfo().age
+            greetingVC.person = login.person
          }
          
          else if let navigationVC = viewController as? UINavigationController {
             print(navigationVC.viewControllers)
             let educationVC = navigationVC.topViewController as! EducationViewController
-                    educationVC.school = GeneralInfo.getGeneralInfo().education.school
-                    educationVC.university = GeneralInfo.getGeneralInfo().education.university.universityName
-                    educationVC.department = GeneralInfo.getGeneralInfo().education.university.departmentName
-                    educationVC.direction = GeneralInfo.getGeneralInfo().education.university.directionOfStudy
-                    print(GeneralInfo.getGeneralInfo().education.school)
+            educationVC.education = login.person.education
+            educationVC.person = login.person
                 }
             }
     }
@@ -72,15 +66,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func forgotUserNameButton() {
-        showAlert(with: "User Name", and: username)
+        showAlert(with: "User Name", and: login.userName)
     }
     
     @IBAction func forgotPasswordButton() {
-        showAlert(with: "Password", and: password)
+        showAlert(with: "Password", and: login.password)
     }
     
     @IBAction func logInButton() {
-        if userNameTextField.text != username || passwordTextField.text != password {
+        if userNameTextField.text != login.userName || passwordTextField.text != login.password {
             showAlert(with: "Error!", and: "Wrong Log In")
             passwordTextField.text = nil
         }

@@ -14,25 +14,22 @@ class EducationViewController: UIViewController {
     @IBOutlet weak var departmentLabel: UILabel!
     @IBOutlet weak var directionLabel: UILabel!
     
-    var school: String!
-    var university: String!
-    var department: String!
-    var direction: String!
+    var education: Education!
+    var person: GeneralInfo!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        schoolLabel.text = school
-        universityLabel.text = university
-        departmentLabel.text = department
-        directionLabel.text = direction
+        schoolLabel.text = education.school
+        universityLabel.text = education.university.universityName
+        departmentLabel.text = education.university.departmentName
+        directionLabel.text = education.university.directionOfStudy
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let additionalInfoVC = segue.destination as? AdditionalInfoViewController else {
             return
         }
-        additionalInfoVC.skills = GeneralInfo.getGeneralInfo().skills
-        additionalInfoVC.hobbies = GeneralInfo.getGeneralInfo().hobbies
+        additionalInfoVC.person = person
     }
 
 }

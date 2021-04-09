@@ -17,18 +17,16 @@ class GreetingViewController: UIViewController {
     @IBOutlet weak var avatarImageView: UIImageView!
     
     // MARK: - Public Properties
-    var userName: String!
-    var age: Int!
-    var homeImage: String!
+    var person: GeneralInfo!
     
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        let img: UIImage = UIImage(named: homeImage) ?? UIImage()
+        let img: UIImage = UIImage(named: person.image) ?? UIImage()
         avatarImageView.image = img
-        userNameLabel.text = userName
-        generalInfoLabel.text = "My name is \(userName!)"
-        ageLabel.text = "I'm \(String(age)) years old"
+        userNameLabel.text = person.name
+        generalInfoLabel.text = "My name is \(person.name)"
+        ageLabel.text = "I'm \(String(person.age)) years old"
         
     }
 
